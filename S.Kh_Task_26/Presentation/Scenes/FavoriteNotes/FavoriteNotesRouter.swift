@@ -13,11 +13,25 @@
 import UIKit
 
 protocol FavoriteNotesRoutingLogic {
-    
+    func routeToNoteDetails(with id: UUID?, isEditing: Bool)
 }
 
 
-class FavoriteNotesRouter: NSObject, FavoriteNotesRoutingLogic {
+class FavoriteNotesRouter {
     weak var viewController: FavoriteNotesViewController?
+    
+}
+
+extension FavoriteNotesRouter: FavoriteNotesRoutingLogic {
+    
+    func routeToNoteDetails(with id: UUID?, isEditing: Bool) {
+        if let noteDetailsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NoteDetailsViewController") as? NoteDetailsViewController {
+            NoteDetailsConfigurator.configure(vc: noteDetailsVC)
+            noteDetailsVC.noteID = id
+            noteDetailsVC.isNoteEditing = isEditing
+            viewController?.navigationController?.pushViewController(noteDetailsVC, animated: true)
+        }
+    }
+    
     
 }

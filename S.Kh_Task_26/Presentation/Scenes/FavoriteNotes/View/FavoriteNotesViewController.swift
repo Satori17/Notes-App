@@ -106,6 +106,8 @@ extension FavoriteNotesViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let currentNote = favoriteNotes[indexPath.row]
+        router?.routeToNoteDetails(with: currentNote.id, isEditing: true)        
     }
     
 }
