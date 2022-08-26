@@ -7,8 +7,11 @@
 
 import UIKit
 
-protocol FavoriteNotesDelegate: AnyObject {
+protocol AddFavoriteNoteDelegate: AnyObject {
     func addFavoriteNote(cell: NoteCell)
+}
+
+protocol RemoveFavoriteNoteDelegate: AnyObject {
     func removeFavoriteNote(cell: NoteCell)
 }
 
@@ -21,7 +24,8 @@ class NoteCell: UITableViewCell {
     
     //MARK: - Vars
     
-    weak var delegate: FavoriteNotesDelegate?
+    weak var addDelegate: AddFavoriteNoteDelegate?
+    weak var removeDelegate: RemoveFavoriteNoteDelegate?
     
     //MARK: - Cell Lifecycle
     
@@ -35,10 +39,10 @@ class NoteCell: UITableViewCell {
     @IBAction func addToFavoritesBtnPressed(_ sender: UIButton) {
         if sender.currentImage == UIImage(systemName: "star") {
             sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            delegate?.addFavoriteNote(cell: self)
+            addDelegate?.addFavoriteNote(cell: self)
         } else {
             sender.setImage(UIImage(systemName: "star"), for: .normal)
-            delegate?.removeFavoriteNote(cell: self)
+            removeDelegate?.removeFavoriteNote(cell: self)
         }
     }
     

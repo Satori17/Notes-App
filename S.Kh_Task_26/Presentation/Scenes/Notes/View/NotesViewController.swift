@@ -65,7 +65,7 @@ class NotesViewController: UIViewController {
 
 //MARK: - Display Logic & Add to favorites Protocol
 
-extension NotesViewController: NotesDisplayLogic, FavoriteNotesDelegate {
+extension NotesViewController: NotesDisplayLogic, AddFavoriteNoteDelegate, RemoveFavoriteNoteDelegate {
     
     func addFavoriteNote(cell: NoteCell) {
         if let indexPath = notesTableView.indexPath(for: cell) {
@@ -80,7 +80,6 @@ extension NotesViewController: NotesDisplayLogic, FavoriteNotesDelegate {
             interactor?.removeNoteFromFavorites(note: currentNote)
         }
     }
-    
             
     func display(notes: [Note]) {
         self.notes = notes
@@ -108,7 +107,8 @@ extension NotesViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(forIndexPath: indexPath) as NoteCell
         let currentNote = notes[indexPath.row]
         cell.configure(with: currentNote)
-        cell.delegate = self
+        cell.addDelegate = self
+        cell.removeDelegate = self
         
         return cell
     }
